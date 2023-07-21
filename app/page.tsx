@@ -1,13 +1,14 @@
-"use client"
-import { Layout } from 'antd'
-const { Header } = Layout;
+'use client';
 
-const Index = () =>{
-    return(
-        <Layout>
-            <Header style={{ padding: 0, background: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Teste para empresa Looplex</Header>
-        </Layout>
-    )
-}
+import * as S from './styles';
+import AuthContainer from '@/components/custom/AuthContainer';
+
+const Index = () => {
+  return (
+    <S.Wrapper>
+      <AuthContainer />
+    </S.Wrapper>
+  );
+};
 
 export default Index;
