@@ -10,23 +10,26 @@ const items: ItemProps[] = [
     errorMessage: 'Por favor, insira seu Email!',
   },
   {
+    label: 'Nome',
+    errorMessage: 'Por favor, insira seu Nome!',
+  },
+  {
+    label: 'Sobrenome',
+    errorMessage: 'Por favor, insira seu Sobrenome!',
+  },
+  {
     label: 'Senha',
     type: 'password',
     errorMessage: 'Por favor, insira sua Senha!',
   },
 ];
 
-const Index = () => {
+const RegisterPage = () => {
   return (
     <S.Wrapper>
-      <AuthContainer
-        title='Conecte-se'
-        redirectUrl='register'
-        subtitle='Cadastre-se'
-        items={items}
-      />
+      <AuthContainer title='Cadastre-se' subtitle='Conecte-se' items={items} />
     </S.Wrapper>
   );
 };
 
-export default Index;
+export default RegisterPage;

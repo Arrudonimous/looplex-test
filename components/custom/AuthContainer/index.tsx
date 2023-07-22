@@ -3,8 +3,21 @@ import * as S from './styles';
 import AuthForm from '../AuthForm';
 import Image from 'next/image';
 import LooplexLogo from '@/public/images/looplex-logo.png';
+import { ItemProps } from '@/components/core/Form';
 
-const AuthContainer = () => {
+interface AuthContainerProps {
+  title: string;
+  subtitle: string;
+  redirectUrl?: string;
+  items: ItemProps[];
+}
+
+const AuthContainer = ({
+  title,
+  redirectUrl,
+  subtitle,
+  items,
+}: AuthContainerProps) => {
   return (
     <S.AuthContainerWrapper>
       <S.InfoContainer>
@@ -13,7 +26,12 @@ const AuthContainer = () => {
           Projeto de chat desenvolvido com: NextJs, Pocketbase e Ant Design
         </S.DescriptionParagraph>
       </S.InfoContainer>
-      <AuthForm />
+      <AuthForm
+        title={title}
+        redirectUrl={redirectUrl}
+        subtitle={subtitle}
+        items={items}
+      />
     </S.AuthContainerWrapper>
   );
 };

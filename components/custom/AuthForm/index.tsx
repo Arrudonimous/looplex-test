@@ -1,19 +1,15 @@
 import * as S from './styles';
 import Form, { ItemProps } from '@/components/core/Form';
 import Typography from '@/components/core/Typography';
-import { FormInstance } from 'antd';
+import Link from 'next/link';
 
-const items: ItemProps[] = [
-  {
-    label: 'Email',
-    errorMessage: 'Por favor, insira seu Email!',
-  },
-  {
-    label: 'Senha',
-    type: 'password',
-    errorMessage: 'Por favor, insira sua Senha!',
-  },
-];
+interface AuthFormProps {
+  title: string;
+  subtitle: string;
+  redirectUrl?: string;
+  items: ItemProps[];
+}
+
 
 const onFinish = (values: any) => {
   console.log(values);
@@ -23,11 +19,11 @@ const onFinishFailed = (values: any) => {
   console.log(values);
 };
 
-const AuthForm = () => {
+const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
   return (
     <S.AuthFormContainer>
       <Typography style='title' color='white' fontSize='32px'>
-        Conecte-se
+        {title}
       </Typography>
       <Form items={items} onFinish={onFinish} onFinishFailed={onFinishFailed} />
       <S.AuthFormFooterContainer>
@@ -35,7 +31,13 @@ const AuthForm = () => {
           Ou
         </Typography>
         <Typography style='text' color='white' fontSize='18px'>
-          Conecte-se aqui
+          {subtitle}
+          <Link
+            href={`/${redirectUrl ? redirectUrl : ''}`}
+            style={{ marginLeft: 8, textDecoration: 'underline' }}
+          >
+            aqui
+          </Link>
         </Typography>
       </S.AuthFormFooterContainer>
     </S.AuthFormContainer>
