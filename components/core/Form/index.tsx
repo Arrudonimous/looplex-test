@@ -1,9 +1,7 @@
-import { Form as FormCore } from 'antd';
+import { Form as FormCore, Input } from 'antd';
 import { InputLabel } from './styles';
 import { poppins } from '@/styles/font';
 import Button from '@/components/core/Button';
-import Input from '../Input';
-import { FormInstance } from 'antd/lib/form/Form';
 
 export interface ItemProps {
   label: string;
@@ -25,6 +23,8 @@ const Form = ({ items, onFinish, onFinishFailed }: FormProps) => {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
+        marginBottom: 32,
+        marginTop: 48,
       }}
       autoComplete='off'
       onFinish={onFinish}
@@ -32,14 +32,15 @@ const Form = ({ items, onFinish, onFinishFailed }: FormProps) => {
     >
       {items.map((item) => (
         <FormCore.Item
+          key={item.label}
           label={
             <InputLabel className={poppins.className}>{item.label}</InputLabel>
           }
           rules={[{ required: true, message: item.errorMessage }]}
-          style={{ padding: 0, marginBottom: '24px' }}
+          style={{ padding: 0, marginBottom: '32px' }}
           name={item.label}
         >
-          <Input type={item.type} />
+          <Input type={item.type} size='large' />
         </FormCore.Item>
       ))}
       <Button htmlType='submit'>Entrar</Button>

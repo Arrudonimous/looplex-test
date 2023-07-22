@@ -19,6 +19,7 @@ const Button = ({ children, htmlType }: ButtonProps) => {
         alignItems: 'center',
         justifyContent: 'center',
         display: 'flex',
+        margin: 0,
       }}
       type='primary'
       className={poppins.className}

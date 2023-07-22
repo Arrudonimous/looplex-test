@@ -1,6 +1,7 @@
 import * as S from './styles';
 import Form, { ItemProps } from '@/components/core/Form';
 import Typography from '@/components/core/Typography';
+import { FormInstance } from 'antd';
 
 const items: ItemProps[] = [
   {
@@ -15,7 +16,7 @@ const items: ItemProps[] = [
 ];
 
 const onFinish = (values: any) => {
-  console.log('oi');
+  console.log(values);
 };
 
 const onFinishFailed = (values: any) => {

@@ -39,13 +39,31 @@ const Typography = ({
     );
   } else if (style === 'paragraph') {
     return (
-      <Paragraph style={{ color, fontSize }} className={poppins.className}>
+      <Paragraph
+        style={{
+          color,
+          fontSize,
+          fontWeight,
+          padding: 0,
+          margin: 0,
+        }}
+        className={poppins.className}
+      >
         {children}
       </Paragraph>
     );
   } else {
     return (
-      <Text style={{ color, fontSize }} className={poppins.className}>
+      <Text
+        style={{
+          color,
+          fontSize,
+          fontWeight,
+          padding: 0,
+          margin: 0,
+        }}
+        className={poppins.className}
+      >
         {children}
       </Text>
     );
