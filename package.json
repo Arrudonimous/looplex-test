@@ -16,6 +16,7 @@
     "commitizen": "^4.3.0",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
+    "less-loader": "^11.1.3",
     "next": "13.4.10",
     "pocketbase": "^0.15.3",
     "react": "18.2.0",

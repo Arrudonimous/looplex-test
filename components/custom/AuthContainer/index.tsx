@@ -1,8 +1,8 @@
 'use client';
-import Image from 'next/image';
 import * as S from './styles';
-import LooplexLogo from '@/public/images/looplex-logo.png';
 import AuthForm from '../AuthForm';
+import Image from 'next/image';
+import LooplexLogo from '@/public/images/looplex-logo.png';
 
 const AuthContainer = () => {
   return (
