@@ -51,3 +51,43 @@ export const SendMessageContainer = styled.div`
   width: 100%;
   gap: 1rem;
 `;
+
+export const MessagesContainer = styled.div`
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 37rem;
+
+  scrollbar-width: thin;
+  scrollbar-color: #555555 #f1f1f1;
+
+  /* Estilo da barra de rolagem */
+  &::-webkit-scrollbar {
+    width: 5px; /* Largura da barra de rolagem */
+  }
+
+  /* Cor da alça (polegar) da barra de rolagem */
+  &::-webkit-scrollbar-thumb {
+    background-color: #555555;
+  }
+
+  /* Estilo da pista (trilha) da barra de rolagem */
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+`;
+
+interface MessageProps {
+  isMine: boolean;
+}
+
+export const Message = styled.div<MessageProps>`
+  display: flex;
+  width: 22.5rem;
+  background-color: blue;
+  align-self: ${({ isMine }) => (isMine ? 'end' : 'start')};
+  background-color: ${({ isMine }) => (isMine ? '#1D2632' : '#D9D9D9')};
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+`;

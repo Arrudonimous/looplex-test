@@ -8,6 +8,7 @@ import BaseChatContent from '@/components/custom/BaseChatContent';
 import Chat from '@/components/custom/Chat';
 
 export interface UsersProps {
+  id: number;
   name: string;
   lastName: string;
   email: string;
@@ -15,16 +16,19 @@ export interface UsersProps {
 
 const users: UsersProps[] = [
   {
+    id: 1,
     name: 'Mateus',
     lastName: 'Silva',
     email: 'mateus@gmail.com',
   },
   {
+    id: 2,
     name: 'Giovana',
     lastName: 'Gabrielly',
     email: 'giovana@gmail.com',
   },
   {
+    id: 3,
     name: 'Juliano',
     lastName: 'Abras',
     email: 'juliano@gmail.com',
