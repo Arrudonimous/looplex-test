@@ -14,6 +14,11 @@ export const ContactContainer = styled.div<ContactContainerProps>`
   align-items: center;
   justify-content: start;
   background-color: ${({ selected }) => (selected ? '#D9D9D9' : 'transparent')};
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const ContactAvatar = styled.div`
