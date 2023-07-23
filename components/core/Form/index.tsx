@@ -43,7 +43,9 @@ const Form = ({ items, onFinish, onFinishFailed }: FormProps) => {
           <Input type={item.type} size='large' />
         </FormCore.Item>
       ))}
-      <Button htmlType='submit'>Entrar</Button>
+      <Button htmlType='submit' block={true}>
+        Entrar
+      </Button>
     </FormCore>
   );
 };

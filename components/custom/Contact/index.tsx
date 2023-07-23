@@ -3,6 +3,7 @@ import { UsersProps } from '@/app/home/page';
 import * as S from './styles';
 
 import Typography from '@/components/core/Typography';
+import Avatar from '../Avatar';
 
 interface ContactProps {
   user: UsersProps;
@@ -13,10 +14,12 @@ interface ContactProps {
 const Contact = ({ user, setSelectedChat, selected }: ContactProps) => {
   return (
     <S.ContactContainer onClick={setSelectedChat} selected={selected}>
-      <S.ContactAvatar>{user.name.charAt(0)}</S.ContactAvatar>
-      <Typography style='text' color={selected ? '#212529' : 'white'}>
-        {user.name} {user.lastName}
-      </Typography>
+      <Avatar name={user.name} />
+      <div style={{ width: '60%' }}>
+        <Typography style='text' color={selected ? '#212529' : 'white'}>
+          {user.name} {user.lastName}
+        </Typography>
+      </div>
     </S.ContactContainer>
   );
 };

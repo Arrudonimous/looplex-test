@@ -11,10 +11,8 @@ export const Wrapper = styled.div`
 
 export const ChatContainer = styled.div`
   border-radius: 10px;
-  background-color: #ffffff;
   width: 100%;
   max-width: 70rem;
   height: 49rem;
   display: flex;
-  
 `;

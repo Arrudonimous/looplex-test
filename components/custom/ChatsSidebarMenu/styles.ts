@@ -9,6 +9,8 @@ export const SidebarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
+  border-top-left-radius: inherit;
+  border-bottom-left-radius: inherit;
 `;
 
 export const ChatsContainer = styled.div`

@@ -13,9 +13,13 @@ import Contact from '../Contact';
 
 interface ChatSidebarMenuProps {
   users: UsersProps[];
+  setSelectedContact: any;
 }
 
-const ChatSidebarMenu = ({ users }: ChatSidebarMenuProps) => {
+const ChatSidebarMenu = ({
+  users,
+  setSelectedContact,
+}: ChatSidebarMenuProps) => {
   const router = useRouter();
 
   const [selectedChat, setSelectedChat] = useState<Number>();
@@ -35,12 +39,15 @@ const ChatSidebarMenu = ({ users }: ChatSidebarMenuProps) => {
             user={user}
             key={index}
             selected={selectedChat === index}
-            setSelectedChat={() => setSelectedChat(index)}
+            setSelectedChat={() => {
+              setSelectedContact(index);
+              setSelectedChat(index);
+            }}
           />
         ))}
       </S.ChatsContainer>
 
-      <Button danger={true} onClick={handleLogout}>
+      <Button danger={true} onClick={handleLogout} block={true}>
         <ExportOutlined />
         <span>Sair</span>
       </Button>

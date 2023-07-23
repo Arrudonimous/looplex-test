@@ -8,12 +8,19 @@ interface ButtonProps {
   danger?: boolean;
   onClick?: MouseEventHandler<HTMLAnchorElement> &
     MouseEventHandler<HTMLButtonElement>;
+  block?: boolean ;
 }
 
-const Button = ({ children, htmlType, danger, onClick }: ButtonProps) => {
+const Button = ({
+  children,
+  htmlType,
+  danger,
+  onClick,
+  block,
+}: ButtonProps) => {
   return (
     <ButtonCore
-      block
+      block={block}
       style={{
         textTransform: 'uppercase',
         fontSize: '18px',
