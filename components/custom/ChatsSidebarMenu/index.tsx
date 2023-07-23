@@ -2,6 +2,7 @@
 
 import { ExportOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import * as S from './styles';
 
@@ -17,6 +18,8 @@ interface ChatSidebarMenuProps {
 const ChatSidebarMenu = ({ users }: ChatSidebarMenuProps) => {
   const router = useRouter();
 
+  const [selectedChat, setSelectedChat] = useState<Number>();
+
   const handleLogout = () => {
     router.push('/');
   };
@@ -27,8 +30,13 @@ const ChatSidebarMenu = ({ users }: ChatSidebarMenuProps) => {
         <Typography style='text' fontSize='20px' color='white'>
           Usuários
         </Typography>
-        {users.map((user) => (
-          <Contact user={user} key={user.name} />
+        {users.map((user, index) => (
+          <Contact
+            user={user}
+            key={index}
+            selected={selectedChat === index}
+            setSelectedChat={() => setSelectedChat(index)}
+          />
         ))}
       </S.ChatsContainer>
 

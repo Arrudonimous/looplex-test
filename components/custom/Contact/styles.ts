@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-export const ContactContainer = styled.div`
+interface ContactContainerProps {
+  selected: boolean;
+}
+
+export const ContactContainer = styled.div<ContactContainerProps>`
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -9,6 +13,7 @@ export const ContactContainer = styled.div`
   border-radius: 10px;
   align-items: center;
   justify-content: start;
+  background-color: ${({ selected }) => (selected ? '#D9D9D9' : 'transparent')};
 `;
 
 export const ContactAvatar = styled.div`
