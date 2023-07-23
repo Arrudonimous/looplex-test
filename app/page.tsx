@@ -1,9 +1,9 @@
 'use client';
 
+import 'react-toastify/dist/ReactToastify.css';
 import { ItemProps } from '@/components/core/Form';
-
+import { ToastContainer } from 'react-toastify';
 import * as S from './styles';
-
 import AuthContainer from '@/components/custom/AuthContainer';
 
 const items: ItemProps[] = [
@@ -27,6 +27,7 @@ const Index = () => {
         subtitle='Cadastre-se'
         items={items}
       />
+      <ToastContainer autoClose={2000} />
     </S.Wrapper>
   );
 };

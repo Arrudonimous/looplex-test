@@ -10,6 +10,7 @@ import Button from '@/components/core/Button';
 import Typography from '@/components/core/Typography';
 import { UsersProps } from '@/app/home/page';
 import Contact from '../Contact';
+import pb from '@/lib/pocketbase';
 
 interface ChatSidebarMenuProps {
   users: UsersProps[];
@@ -25,6 +26,7 @@ const ChatSidebarMenu = ({
   const [selectedChat, setSelectedChat] = useState<Number>();
 
   const handleLogout = () => {
+    pb.authStore.clear();
     router.push('/');
   };
 

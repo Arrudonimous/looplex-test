@@ -2,9 +2,12 @@ import { useRouter } from 'next/navigation';
 
 import * as S from './styles';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import Form, { ItemProps } from '@/components/core/Form';
-import Typography from '@/components/core/Typography';
 import Link from 'next/link';
+import pb from '@/lib/pocketbase';
+import Typography from '@/components/core/Typography';
 
 interface AuthFormProps {
   title: string;
@@ -13,13 +16,82 @@ interface AuthFormProps {
   items: ItemProps[];
 }
 
+const errors = [
+  {
+    code: 'validation_invalid_email',
+    message: 'E-mail já cadastrado',
+  },
+  {
+    code: 'validation_is_email',
+    message: 'Formato de E-mail inválido',
+  },
+  {
+    code: 'validation_values_mismatch',
+    message: 'As senhas não correspondem',
+  },
+  {
+    code: 'validation_length_out_of_range',
+    message: 'A senha deve ter mais de 5 caracteres',
+  },
+];
+
 const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
   const router = useRouter();
 
-  const onFinish = (values: any) => {
-    console.log(values);
+  const onFinish = async (values: any) => {
+    if (values.NomeCompleto) {
+      try {
+        await pb.collection('users').create({
+          email: values.Email,
+          password: values.Senha,
+          passwordConfirm: values.ConfirmaçãodeSenha,
+          name: values.NomeCompleto,
+        });
 
-    router.push('/home');
+        toast('Usuário cadastrado com sucesso!', {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'success',
+        });
+      } catch (error: any) {
+        console.log(error.data.data);
+
+        if (error.data.data.email) {
+          const errorMessage = errors.find(
+            (customError) => customError.code === error.data.data.email.code
+          )?.message;
+
+          toast(errorMessage, {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        } else if (error.data.data.password) {
+          const errorMessage = errors.find(
+            (customError) => customError.code === error.data.data.password.code
+          )?.message;
+
+          toast(errorMessage, {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        } else if (error.data.data.passwordConfirm) {
+          const errorMessage = errors.find(
+            (customError) =>
+              customError.code === error.data.data.passwordConfirm.code
+          )?.message;
+
+          toast(errorMessage, {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        }
+      }
+    } else {
+      console.log('Login');
+    }
   };
 
   const onFinishFailed = (values: any) => {

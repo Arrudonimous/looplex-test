@@ -38,7 +38,7 @@ const Form = ({ items, onFinish, onFinishFailed }: FormProps) => {
           }
           rules={[{ required: true, message: item.errorMessage }]}
           style={{ padding: 0, marginBottom: '32px' }}
-          name={item.label}
+          name={item.label.replace(/ /g, '')}
         >
           <Input type={item.type} size='large' />
         </FormCore.Item>
