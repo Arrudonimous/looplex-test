@@ -1,7 +1,9 @@
 'use client';
 
 import { ItemProps } from '@/components/core/Form';
+
 import * as S from './styles';
+
 import AuthContainer from '@/components/custom/AuthContainer';
 
 const items: ItemProps[] = [

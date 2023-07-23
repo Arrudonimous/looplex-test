@@ -1,13 +1,16 @@
 import { poppins } from '@/styles/font';
 import { Button as ButtonCore } from 'antd';
-import { ReactNode } from 'react';
+import { MouseEventHandler, ReactNode } from 'react';
 
 interface ButtonProps {
   children: ReactNode;
   htmlType?: 'button' | 'submit' | 'reset';
+  danger?: boolean;
+  onClick?: MouseEventHandler<HTMLAnchorElement> &
+    MouseEventHandler<HTMLButtonElement>;
 }
 
-const Button = ({ children, htmlType }: ButtonProps) => {
+const Button = ({ children, htmlType, danger, onClick }: ButtonProps) => {
   return (
     <ButtonCore
       block
@@ -24,6 +27,8 @@ const Button = ({ children, htmlType }: ButtonProps) => {
       type='primary'
       className={poppins.className}
       htmlType={htmlType}
+      danger={danger}
+      onClick={onClick}
     >
       {children}
     </ButtonCore>

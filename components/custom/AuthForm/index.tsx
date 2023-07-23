@@ -1,4 +1,7 @@
+import { useRouter } from 'next/navigation';
+
 import * as S from './styles';
+
 import Form, { ItemProps } from '@/components/core/Form';
 import Typography from '@/components/core/Typography';
 import Link from 'next/link';
@@ -10,16 +13,19 @@ interface AuthFormProps {
   items: ItemProps[];
 }
 
-
-const onFinish = (values: any) => {
-  console.log(values);
-};
-
-const onFinishFailed = (values: any) => {
-  console.log(values);
-};
-
 const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
+  const router = useRouter();
+
+  const onFinish = (values: any) => {
+    console.log(values);
+
+    router.push('/home');
+  };
+
+  const onFinishFailed = (values: any) => {
+    console.log(values);
+  };
+
   return (
     <S.AuthFormContainer>
       <Typography style='title' color='white' fontSize='32px'>
