@@ -33,6 +33,10 @@ const errors = [
     code: 'validation_length_out_of_range',
     message: 'A senha deve ter mais de 5 caracteres',
   },
+  {
+    code: 'Failed to authenticate.',
+    message: 'Verifique suas credenciais e tente novamente',
+  },
 ];
 
 const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
@@ -53,6 +57,14 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
           autoClose: 2000,
           type: 'success',
         });
+
+        await pb
+          .collection('users')
+          .authWithPassword(values.Email, values.Senha);
+
+        setTimeout(() => {
+          router.push('/home');
+        }, 2100);
       } catch (error: any) {
         console.log(error.data.data);
 
@@ -90,7 +102,33 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
         }
       }
     } else {
-      console.log('Login');
+      try {
+        const authData = await pb
+          .collection('users')
+          .authWithPassword(values.Email, values.Senha);
+
+        toast('Logado com sucesso!', {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'success',
+        });
+
+        setTimeout(() => {
+          router.push('/home');
+        }, 2100);
+      } catch (error: any) {
+        if (error.data.code) {
+          const errorMessage = errors.find(
+            (customError) => customError.code === error.data.message
+          )?.message;
+
+          toast(errorMessage, {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        }
+      }
     }
   };
 
