@@ -49,7 +49,7 @@ const Home = () => {
     if (typeof window !== 'undefined' && typeof EventSource !== 'undefined') {
       // Your code that uses EventSource here
       if (process.env.PB_URL) {
-        const eventSource = new EventSource('http://127.0.0.1:8090/_/');
+        const eventSource = new EventSource(process.env.PB_URL);
 
         const fetchUsers = async () => {
           const resultList = await pb.collection('users').getFullList();
