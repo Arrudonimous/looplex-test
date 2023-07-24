@@ -13,15 +13,38 @@ import pb from '@/lib/pocketbase';
 interface ChatProps {
   user: UsersProps;
   messages: any;
+  chatId: string | undefined;
 }
 
-const Chat = ({ user, messages }: ChatProps) => {
+const Chat = ({ user, messages, chatId }: ChatProps) => {
   const [loggedUserData, setLoggedUserData] = useState<any>();
   const [sendMessageText, setSendMessageText] = useState('');
+  const sendMessagesData = messages;
 
-  const handleSendMessage = () => {
-    console.log('Enviou');
+  const handleSendMessage = async () => {
+    const incomingMessage = {
+      senderId: loggedUserData.model.id,
+      content: sendMessageText,
+    };
+    sendMessagesData.push(incomingMessage);
+
+    if (chatId) {
+      await pb
+        .collection('chats')
+        .update(chatId, { messages: sendMessagesData });
+
+      setSendMessageText('');
+    }
   };
+
+  useEffect(() => {
+    const loggedUserData = localStorage.getItem('pocketbase_auth');
+
+    if (loggedUserData) {
+      const loggedUserParsed = JSON.parse(loggedUserData);
+      setLoggedUserData(loggedUserParsed);
+    }
+  }, [messages]);
 
   return (
     <S.ChatWrapper>
@@ -43,7 +66,10 @@ const Chat = ({ user, messages }: ChatProps) => {
       <S.ChatContent>
         <S.MessagesContainer>
           {messages?.map((message: any) => (
-            <S.Message isMine={message.senderId !== user.id}>
+            <S.Message
+              isMine={message.senderId !== user.id}
+              key={message.content}
+            >
               <Typography
                 style='text'
                 color={message.senderId !== user.id ? 'white' : '#212529'}
@@ -59,6 +85,7 @@ const Chat = ({ user, messages }: ChatProps) => {
           <Input
             placeholder='Digite sua mensagem'
             onChange={(e: any) => setSendMessageText(e.target.value)}
+            value={sendMessageText}
           />
           <Button onClick={handleSendMessage}>
             <SendOutlined style={{ fontSize: '1.5rem' }} />

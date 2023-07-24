@@ -138,7 +138,11 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
   };
 
   const onFinishFailed = (values: any) => {
-    console.log(values);
+    toast('Preencha os campos e tente novamente', {
+      hideProgressBar: true,
+      autoClose: 2000,
+      type: 'error',
+    });
   };
 
   return (

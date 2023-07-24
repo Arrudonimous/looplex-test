@@ -5,9 +5,10 @@ interface InputProps {
   type?: 'password';
   placeholder?: string;
   onChange?: any;
+  value?: string;
 }
 
-const Input = ({ type, placeholder, onChange }: InputProps) => {
+const Input = ({ type, placeholder, onChange, value }: InputProps) => {
   return (
     <InputCore
       size='large'
@@ -16,6 +17,7 @@ const Input = ({ type, placeholder, onChange }: InputProps) => {
       style={{ backgroundColor: '#D9D9D9' }}
       placeholder={placeholder}
       onChange={onChange}
+      value={value}
     />
   );
 };

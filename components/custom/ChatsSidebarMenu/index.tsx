@@ -2,7 +2,7 @@
 
 import { ExportOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as S from './styles';
 
@@ -30,6 +30,10 @@ const ChatSidebarMenu = ({
     localStorage.clear();
     router.push('/');
   };
+
+  useEffect(() => {
+    setSelectedChat(selectedChat);
+  }, [users]);
 
   return (
     <S.SidebarContainer>

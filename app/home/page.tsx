@@ -15,9 +15,10 @@ export interface UsersProps {
 }
 
 const Home = () => {
-  const [selectedContact, setSelectedContact] = useState<any>();
+  const [currentChatId, setCurrentChatId] = useState<string>();
   const [currentChatMessages, setCurrentChatMessages] = useState<any>();
   const [loggedUser, setLoggedUser] = useState<any>();
+  const [selectedContact, setSelectedContact] = useState<any>();
   const [users, setUsers] = useState<any>();
 
   const fetchUsers = async () => {
@@ -37,6 +38,10 @@ const Home = () => {
     }
   };
 
+  pb.collection('users').subscribe('*', function (e) {
+    fetchUsers();
+  });
+
   const getCurrentChatMessages = (index: any) => {
     setSelectedContact(index);
     const desiredUserChatId = users[index].id;
@@ -47,16 +52,20 @@ const Home = () => {
     const resultList = await pb.collection('chats').getList(1, 50, {
       filter: `user1 = "${loggedUser?.model.id}" ||  user2 = "${loggedUser?.model.id}"`,
     });
-
     const currentChat = resultList.items.find(
       (chat) =>
         chat.user1 === desiredUserChatId || chat.user2 === desiredUserChatId
     );
 
     if (currentChat) {
-      console.log(currentChat.messages);
+      pb.collection('chats').subscribe(currentChat?.id, function (e) {
+        console.log(e.record.messages);
+        setCurrentChatMessages(e.record.messages);
+      });
     }
+
     setCurrentChatMessages(currentChat?.messages);
+    setCurrentChatId(currentChat?.id);
   };
 
   useEffect(() => {
@@ -71,7 +80,11 @@ const Home = () => {
           setSelectedContact={getCurrentChatMessages}
         />
         {selectedContact >= 0 ? (
-          <Chat user={users[selectedContact]} messages={currentChatMessages} />
+          <Chat
+            user={users[selectedContact]}
+            messages={currentChatMessages}
+            chatId={currentChatId}
+          />
         ) : (
           <BaseChatContent />
         )}
