@@ -60,7 +60,7 @@ const Chat = ({ user }: ChatProps) => {
         <S.NameContainer>
           <Avatar name={user.name} />
           <Typography style='text' color='white' fontSize='1.5rem'>
-            {user.name} {user.lastName}
+            {user.name}
           </Typography>
         </S.NameContainer>
 

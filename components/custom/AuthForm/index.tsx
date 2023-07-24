@@ -45,7 +45,7 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
   const onFinish = async (values: any) => {
     if (values.NomeCompleto) {
       try {
-        await pb.collection('users').create({
+        const createdUserData = await pb.collection('users').create({
           email: values.Email,
           password: values.Senha,
           passwordConfirm: values.ConfirmaçãodeSenha,
@@ -53,18 +53,27 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
           emailVisibility: true,
         });
 
+        const resultList = await pb.collection('users').getFullList();
+        pb.autoCancellation(false);
+        resultList.forEach(async (user) => {
+          if (user.id !== createdUserData.id) {
+            await pb.collection('chats').create({
+              user1: user.id,
+              user2: createdUserData.id,
+              messages: [],
+            });
+          }
+        });
+
         toast('Usuário cadastrado com sucesso!', {
           hideProgressBar: true,
           autoClose: 2000,
           type: 'success',
         });
-
         const authData = await pb
           .collection('users')
           .authWithPassword(values.Email, values.Senha);
-
         localStorage.setItem('loggedUser', JSON.stringify(authData.record));
-
         setTimeout(() => {
           router.push('/home');
         }, 2100);
@@ -73,7 +82,6 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
           const errorMessage = errors.find(
             (customError) => customError.code === error.data.data.email.code
           )?.message;
-
           toast(errorMessage, {
             hideProgressBar: true,
             autoClose: 2000,
@@ -83,7 +91,6 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
           const errorMessage = errors.find(
             (customError) => customError.code === error.data.data.password.code
           )?.message;
-
           toast(errorMessage, {
             hideProgressBar: true,
             autoClose: 2000,
@@ -94,7 +101,6 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
             (customError) =>
               customError.code === error.data.data.passwordConfirm.code
           )?.message;
-
           toast(errorMessage, {
             hideProgressBar: true,
             autoClose: 2000,
@@ -102,38 +108,31 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
           });
         }
       }
-    } else {
-      try {
-        const authData = await pb
-          .collection('users')
-          .authWithPassword(values.Email, values.Senha);
-
-        console.log(authData);
-
-        toast('Logado com sucesso!', {
-          hideProgressBar: true,
-          autoClose: 2000,
-          type: 'success',
-        });
-
-        localStorage.setItem('loggedUser', JSON.stringify(authData.record));
-
-        setTimeout(() => {
-          router.push('/home');
-        }, 2100);
-      } catch (error: any) {
-        if (error.data.code) {
-          const errorMessage = errors.find(
-            (customError) => customError.code === error.data.message
-          )?.message;
-
-          toast(errorMessage, {
-            hideProgressBar: true,
-            autoClose: 2000,
-            type: 'error',
-          });
-        }
-      }
+      // } else {
+      //   try {
+      //     const authData = await pb
+      //       .collection('users')
+      //       .authWithPassword(values.Email, values.Senha);
+      //     toast('Logado com sucesso!', {
+      //       hideProgressBar: true,
+      //       autoClose: 2000,
+      //       type: 'success',
+      //     });
+      //     localStorage.setItem('loggedUser', JSON.stringify(authData.record));
+      //     setTimeout(() => {
+      //       router.push('/home');
+      //     }, 2100);
+      //   } catch (error: any) {
+      //     if (error.data.code) {
+      //       const errorMessage = errors.find(
+      //         (customError) => customError.code === error.data.message
+      //       )?.message;
+      //       toast(errorMessage, {
+      //         hideProgressBar: true,
+      //         autoClose: 2000,
+      //         type: 'error',
+      //       });
+      //     }
     }
   };
 
