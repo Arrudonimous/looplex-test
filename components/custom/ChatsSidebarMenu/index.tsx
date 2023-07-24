@@ -36,7 +36,7 @@ const ChatSidebarMenu = ({
         <Typography style='text' fontSize='20px' color='white'>
           Usuários
         </Typography>
-        {users.map((user, index) => (
+        {users?.map((user, index) => (
           <Contact
             user={user}
             key={index}

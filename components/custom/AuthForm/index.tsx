@@ -50,6 +50,7 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
           password: values.Senha,
           passwordConfirm: values.ConfirmaçãodeSenha,
           name: values.NomeCompleto,
+          emailVisibility: true,
         });
 
         toast('Usuário cadastrado com sucesso!', {
@@ -58,16 +59,16 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
           type: 'success',
         });
 
-        await pb
+        const authData = await pb
           .collection('users')
           .authWithPassword(values.Email, values.Senha);
+
+        localStorage.setItem('loggedUser', JSON.stringify(authData.record));
 
         setTimeout(() => {
           router.push('/home');
         }, 2100);
       } catch (error: any) {
-        console.log(error.data.data);
-
         if (error.data.data.email) {
           const errorMessage = errors.find(
             (customError) => customError.code === error.data.data.email.code
@@ -107,11 +108,15 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
           .collection('users')
           .authWithPassword(values.Email, values.Senha);
 
+        console.log(authData);
+
         toast('Logado com sucesso!', {
           hideProgressBar: true,
           autoClose: 2000,
           type: 'success',
         });
+
+        localStorage.setItem('loggedUser', JSON.stringify(authData.record));
 
         setTimeout(() => {
           router.push('/home');

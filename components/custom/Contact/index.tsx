@@ -17,7 +17,7 @@ const Contact = ({ user, setSelectedChat, selected }: ContactProps) => {
       <Avatar name={user.name} />
       <div style={{ width: '60%' }}>
         <Typography style='text' color={selected ? '#212529' : 'white'}>
-          {user.name} {user.lastName}
+          {user.name}
         </Typography>
       </div>
     </S.ContactContainer>
