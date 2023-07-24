@@ -59,7 +59,6 @@ const Home = () => {
 
     if (currentChat) {
       pb.collection('chats').subscribe(currentChat?.id, function (e) {
-        console.log(e.record.messages);
         setCurrentChatMessages(e.record.messages);
       });
     }
