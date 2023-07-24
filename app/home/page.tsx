@@ -48,36 +48,34 @@ const Home = () => {
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof EventSource !== 'undefined') {
       // Your code that uses EventSource here
-      if (process.env.PB_URL) {
-        const eventSource = new EventSource(process.env.PB_URL);
+      const eventSource = new EventSource('https://pocketbase-looplex.fly.dev');
 
-        const fetchUsers = async () => {
-          const resultList = await pb.collection('users').getFullList();
+      const fetchUsers = async () => {
+        const resultList = await pb.collection('users').getFullList();
 
-          const loggedUserData = localStorage.getItem('pocketbase_auth');
+        const loggedUserData = localStorage.getItem('pocketbase_auth');
 
-          if (loggedUserData) {
-            const loggedUserParsed = JSON.parse(loggedUserData);
-            setLoggedUser(loggedUserParsed);
+        if (loggedUserData) {
+          const loggedUserParsed = JSON.parse(loggedUserData);
+          setLoggedUser(loggedUserParsed);
 
-            const usersList = resultList.filter(
-              (user) => user.id !== loggedUserParsed.model.id
-            );
+          const usersList = resultList.filter(
+            (user) => user.id !== loggedUserParsed.model.id
+          );
 
-            setUsers(usersList);
-          }
-        };
+          setUsers(usersList);
+        }
+      };
 
-        pb.collection('users').subscribe('*', function (e) {
-          fetchUsers();
-        });
-
+      pb.collection('users').subscribe('*', function (e) {
         fetchUsers();
+      });
 
-        return () => {
-          eventSource.close();
-        };
-      }
+      fetchUsers();
+
+      return () => {
+        eventSource.close();
+      };
     } else {
       console.log('Error');
     }
