@@ -1,5 +1,4 @@
 'use client';
-
 import ChatSidebarMenu from '@/components/custom/ChatsSidebarMenu';
 import * as S from './styles';
 
@@ -18,31 +17,10 @@ const Home = () => {
   const [currentChatId, setCurrentChatId] = useState<string>();
   const [currentChatMessages, setCurrentChatMessages] = useState<any>();
   const [loggedUser, setLoggedUser] = useState<any>();
-  const [selectedContact, setSelectedContact] = useState<any>();
+  const [selectedContact, setSelectedContact] = useState<number | null>(null);
   const [users, setUsers] = useState<any>();
 
-  const fetchUsers = async () => {
-    const resultList = await pb.collection('users').getFullList();
-
-    const loggedUserData = localStorage.getItem('pocketbase_auth');
-
-    if (loggedUserData) {
-      const loggedUserParsed = JSON.parse(loggedUserData);
-      setLoggedUser(loggedUserParsed);
-
-      const usersList = resultList.filter(
-        (user) => user.id !== loggedUserParsed.model.id
-      );
-
-      setUsers(usersList);
-    }
-  };
-
-  pb.collection('users').subscribe('*', function (e) {
-    fetchUsers();
-  });
-
-  const getCurrentChatMessages = (index: any) => {
+  const getCurrentChatMessages = (index: number) => {
     setSelectedContact(index);
     const desiredUserChatId = users[index].id;
     fetchMessages(desiredUserChatId);
@@ -68,7 +46,41 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
+    if (typeof window !== 'undefined' && typeof EventSource !== 'undefined') {
+      // Your code that uses EventSource here
+      if (process.env.PB_URL) {
+        const eventSource = new EventSource('http://127.0.0.1:8090/_/');
+
+        const fetchUsers = async () => {
+          const resultList = await pb.collection('users').getFullList();
+
+          const loggedUserData = localStorage.getItem('pocketbase_auth');
+
+          if (loggedUserData) {
+            const loggedUserParsed = JSON.parse(loggedUserData);
+            setLoggedUser(loggedUserParsed);
+
+            const usersList = resultList.filter(
+              (user) => user.id !== loggedUserParsed.model.id
+            );
+
+            setUsers(usersList);
+          }
+        };
+
+        pb.collection('users').subscribe('*', function (e) {
+          fetchUsers();
+        });
+
+        fetchUsers();
+
+        return () => {
+          eventSource.close();
+        };
+      }
+    } else {
+      console.log('Error');
+    }
   }, []);
 
   return (
@@ -78,7 +90,7 @@ const Home = () => {
           users={users}
           setSelectedContact={getCurrentChatMessages}
         />
-        {selectedContact >= 0 ? (
+        {selectedContact !== null ? (
           <Chat
             user={users[selectedContact]}
             messages={currentChatMessages}
