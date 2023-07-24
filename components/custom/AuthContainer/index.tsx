@@ -10,6 +10,7 @@ interface AuthContainerProps {
   subtitle: string;
   redirectUrl?: string;
   items: ItemProps[];
+  buttonTitle: string;
 }
 
 const AuthContainer = ({
@@ -17,6 +18,7 @@ const AuthContainer = ({
   redirectUrl,
   subtitle,
   items,
+  buttonTitle,
 }: AuthContainerProps) => {
   return (
     <S.AuthContainerWrapper>
@@ -31,6 +33,7 @@ const AuthContainer = ({
         redirectUrl={redirectUrl}
         subtitle={subtitle}
         items={items}
+        buttonTitle={buttonTitle}
       />
     </S.AuthContainerWrapper>
   );

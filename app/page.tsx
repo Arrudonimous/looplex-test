@@ -18,7 +18,6 @@ const items: ItemProps[] = [
   },
 ];
 
-
 const Index = () => {
   return (
     <S.Wrapper>
@@ -27,6 +26,7 @@ const Index = () => {
         redirectUrl='register'
         subtitle='Cadastre-se'
         items={items}
+        buttonTitle='ENTRAR'
       />
       <ToastContainer autoClose={2000} />
     </S.Wrapper>

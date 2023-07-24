@@ -47,7 +47,6 @@ const Home = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof EventSource !== 'undefined') {
-      // Your code that uses EventSource here
       const eventSource = new EventSource('https://pocketbase-looplex.fly.dev');
 
       const fetchUsers = async () => {

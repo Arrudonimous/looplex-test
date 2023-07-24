@@ -13,9 +13,17 @@ export interface FormProps {
   items: ItemProps[];
   onFinish: (values: any) => void;
   onFinishFailed: any;
+  buttonTitle: string;
+  loading: boolean;
 }
 
-const Form = ({ items, onFinish, onFinishFailed }: FormProps) => {
+const Form = ({
+  items,
+  onFinish,
+  onFinishFailed,
+  buttonTitle,
+  loading,
+}: FormProps) => {
   return (
     <FormCore
       layout='vertical'
@@ -43,8 +51,8 @@ const Form = ({ items, onFinish, onFinishFailed }: FormProps) => {
           <Input type={item.type} size='large' />
         </FormCore.Item>
       ))}
-      <Button htmlType='submit' block={true}>
-        Entrar
+      <Button htmlType='submit' block={true} loading={loading}>
+        {buttonTitle}
       </Button>
     </FormCore>
   );

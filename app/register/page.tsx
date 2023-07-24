@@ -31,7 +31,7 @@ const items: ItemProps[] = [
 const RegisterPage = () => {
   return (
     <S.Wrapper>
-      <AuthContainer title='Cadastre-se' subtitle='Conecte-se' items={items} />
+      <AuthContainer title='Cadastre-se' subtitle='Conecte-se' items={items} buttonTitle="CADASTRAR"/>
       <ToastContainer autoClose={2000} />
     </S.Wrapper>
   );
