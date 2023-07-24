@@ -1,10 +1,11 @@
 'use client';
 
-import 'react-toastify/dist/ReactToastify.css';
 import { ItemProps } from '@/components/core/Form';
-import { ToastContainer } from 'react-toastify';
 import * as S from './styles';
 import AuthContainer from '@/components/custom/AuthContainer';
+
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const items: ItemProps[] = [
   {
@@ -12,25 +13,28 @@ const items: ItemProps[] = [
     errorMessage: 'Por favor, insira seu Email!',
   },
   {
+    label: 'Nome Completo',
+    errorMessage: 'Por favor, insira seu Nome Completo!',
+  },
+  {
     label: 'Senha',
     type: 'password',
     errorMessage: 'Por favor, insira sua Senha!',
   },
+  {
+    label: 'Confirmação de Senha',
+    type: 'password',
+    errorMessage: 'Por favor, insira sua Senha novamente!',
+  },
 ];
 
-
-const Index = () => {
+const RegisterPage = () => {
   return (
     <S.Wrapper>
-      <AuthContainer
-        title='Conecte-se'
-        redirectUrl='register'
-        subtitle='Cadastre-se'
-        items={items}
-      />
+      <AuthContainer title='Cadastre-se' subtitle='Conecte-se' items={items} />
       <ToastContainer autoClose={2000} />
     </S.Wrapper>
   );
 };
 
-export default Index;
+export default RegisterPage;
