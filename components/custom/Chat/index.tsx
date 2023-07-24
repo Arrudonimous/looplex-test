@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UsersProps } from '@/app/home/page';
 
 import * as S from './styles';
@@ -8,51 +8,20 @@ import Typography from '@/components/core/Typography';
 import { MailOutlined, SendOutlined } from '@ant-design/icons';
 import Input from '@/components/core/Input';
 import Button from '@/components/core/Button';
+import pb from '@/lib/pocketbase';
 
 interface ChatProps {
   user: UsersProps;
+  messages: any;
 }
 
-const Chat = ({ user }: ChatProps) => {
-  const [message, setMessage] = useState('');
-  const myId = 4;
+const Chat = ({ user, messages }: ChatProps) => {
+  const [loggedUserData, setLoggedUserData] = useState<any>();
+  const [sendMessageText, setSendMessageText] = useState('');
 
   const handleSendMessage = () => {
     console.log('Enviou');
   };
-
-  const messages = [
-    {
-      senderId: user.id,
-      content:
-        'Boa noite, será que podemos marcar uma reunião para amanha durante a tarde ?',
-    },
-    {
-      senderId: user.id,
-      content:
-        'Tenho interesse em seus projetos pessoais e gostaria de saber se podemos fechar um projeto para desenvolvermos em conjunto. Tenho alguns integrantes para se juntarem contigo e a partir disso, conversamos melhor!',
-    },
-    {
-      senderId: myId,
-      content:
-        'Boa noite, Matheus. Podemos marcar sim! Qual seria o melhor horário para nos reunirmos? Estou livre durante o dia inteiro, apenas me avise caso necessite alterar a data.',
-    },
-    {
-      senderId: user.id,
-      content:
-        'Boa noite, Matheus. Podemos marcar sim! Qual seria o melhor horário para nos reunirmos? Estou livre durante o dia inteiro, apenas me avise caso necessite alterar a data.',
-    },
-    {
-      senderId: myId,
-      content:
-        'Boa noite, Matheus. Podemos marcar sim! Qual seria o melhor horário para nos reunirmos? Estou livre durante o dia inteiro, apenas me avise caso necessite alterar a data.',
-    },
-    {
-      senderId: myId,
-      content:
-        'Boa noite, Matheus. Podemos marcar sim! Qual seria o melhor horário para nos reunirmos? Estou livre durante o dia inteiro, apenas me avise caso necessite alterar a data.',
-    },
-  ];
 
   return (
     <S.ChatWrapper>
@@ -73,7 +42,7 @@ const Chat = ({ user }: ChatProps) => {
       </S.ChatHeader>
       <S.ChatContent>
         <S.MessagesContainer>
-          {messages.map((message) => (
+          {messages?.map((message: any) => (
             <S.Message isMine={message.senderId !== user.id}>
               <Typography
                 style='text'
@@ -89,7 +58,7 @@ const Chat = ({ user }: ChatProps) => {
         <S.SendMessageContainer>
           <Input
             placeholder='Digite sua mensagem'
-            onChange={(e: any) => setMessage(e.target.value)}
+            onChange={(e: any) => setSendMessageText(e.target.value)}
           />
           <Button onClick={handleSendMessage}>
             <SendOutlined style={{ fontSize: '1.5rem' }} />

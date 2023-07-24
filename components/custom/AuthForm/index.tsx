@@ -73,7 +73,7 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
         const authData = await pb
           .collection('users')
           .authWithPassword(values.Email, values.Senha);
-        localStorage.setItem('loggedUser', JSON.stringify(authData.record));
+
         setTimeout(() => {
           router.push('/home');
         }, 2100);
@@ -108,31 +108,32 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
           });
         }
       }
-      // } else {
-      //   try {
-      //     const authData = await pb
-      //       .collection('users')
-      //       .authWithPassword(values.Email, values.Senha);
-      //     toast('Logado com sucesso!', {
-      //       hideProgressBar: true,
-      //       autoClose: 2000,
-      //       type: 'success',
-      //     });
-      //     localStorage.setItem('loggedUser', JSON.stringify(authData.record));
-      //     setTimeout(() => {
-      //       router.push('/home');
-      //     }, 2100);
-      //   } catch (error: any) {
-      //     if (error.data.code) {
-      //       const errorMessage = errors.find(
-      //         (customError) => customError.code === error.data.message
-      //       )?.message;
-      //       toast(errorMessage, {
-      //         hideProgressBar: true,
-      //         autoClose: 2000,
-      //         type: 'error',
-      //       });
-      //     }
+    } else {
+      try {
+        await pb
+          .collection('users')
+          .authWithPassword(values.Email, values.Senha);
+        toast('Logado com sucesso!', {
+          hideProgressBar: true,
+          autoClose: 2000,
+          type: 'success',
+        });
+
+        setTimeout(() => {
+          router.push('/home');
+        }, 2100);
+      } catch (error: any) {
+        if (error.data.code) {
+          const errorMessage = errors.find(
+            (customError) => customError.code === error.data.message
+          )?.message;
+          toast(errorMessage, {
+            hideProgressBar: true,
+            autoClose: 2000,
+            type: 'error',
+          });
+        }
+      }
     }
   };
 

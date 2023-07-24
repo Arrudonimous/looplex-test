@@ -27,6 +27,7 @@ const ChatSidebarMenu = ({
 
   const handleLogout = () => {
     pb.authStore.clear();
+    localStorage.clear();
     router.push('/');
   };
 
