@@ -5,6 +5,8 @@ import { ItemProps } from '@/components/core/Form';
 import { ToastContainer } from 'react-toastify';
 import * as S from './styles';
 import AuthContainer from '@/components/custom/AuthContainer';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const items: ItemProps[] = [
   {
@@ -19,6 +21,14 @@ const items: ItemProps[] = [
 ];
 
 const Index = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const loggedUserData = localStorage.getItem('pocketbase_auth');
+
+    if (loggedUserData) {
+      router.push('/home');
+    }
+  }, []);
   return (
     <S.Wrapper>
       <AuthContainer
