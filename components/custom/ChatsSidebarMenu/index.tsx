@@ -45,28 +45,32 @@ const ChatSidebarMenu = ({
         <Typography style='text' fontSize='20px' color='white'>
           Usuários
         </Typography>
-        {users?.map((user, index) => (
-          <Contact
-            user={user}
-            key={index}
-            selected={selectedChat === index}
-            setSelectedChat={() => {
-              setSelectedContact(index);
-              setSelectedChat(index);
-            }}
-          />
-        ))}
+        <S.ContactsContainer>
+          {users?.map((user, index) => (
+            <Contact
+              user={user}
+              key={index}
+              selected={selectedChat === index}
+              setSelectedChat={() => {
+                setSelectedContact(index);
+                setSelectedChat(index);
+              }}
+            />
+          ))}
+        </S.ContactsContainer>
       </S.ChatsContainer>
 
-      <Button
-        danger={true}
-        onClick={handleLogout}
-        block={true}
-        loading={loading}
-      >
-        <ExportOutlined />
-        <span>Sair</span>
-      </Button>
+      <S.ButtonContainer>
+        <Button
+          danger={true}
+          onClick={handleLogout}
+          block={true}
+          loading={loading}
+        >
+          <ExportOutlined />
+          <span>Sair</span>
+        </Button>
+      </S.ButtonContainer>
     </S.SidebarContainer>
   );
 };

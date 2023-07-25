@@ -16,6 +16,10 @@ export const ContactContainer = styled.div<ContactContainerProps>`
   background-color: ${({ selected }) => (selected ? '#D9D9D9' : 'transparent')};
   transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
 
+  @media (max-width: 990px) {
+    gap: 5px;
+  }
+
   :hover {
     cursor: pointer;
   }

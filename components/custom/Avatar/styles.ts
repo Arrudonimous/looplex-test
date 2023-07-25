@@ -10,4 +10,10 @@ export const ContactAvatar = styled.div`
   border-radius: 999px;
   font-size: 24px;
   color: white;
+
+  @media (max-width: 990px) {
+    width: 2rem;
+    height: 2rem;
+    font-size: 20px;
+  }
 `;
