@@ -11,6 +11,10 @@ export const AuthFormContainer = styled.div`
   justify-content: space-around;
   padding: 2rem;
   width: 100%;
+
+  @media (max-width: 990px) {
+    height: 100vh;
+  }
 `;
 
 export const AuthFormFooterContainer = styled.div`
