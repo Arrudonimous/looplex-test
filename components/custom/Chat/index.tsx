@@ -18,10 +18,12 @@ interface ChatProps {
 
 const Chat = ({ user, messages, chatId }: ChatProps) => {
   const [loggedUserData, setLoggedUserData] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
   const [sendMessageText, setSendMessageText] = useState('');
   const sendMessagesData = messages;
 
   const handleSendMessage = async () => {
+    setLoading(true);
     const incomingMessage = {
       senderId: loggedUserData.model.id,
       content: sendMessageText,
@@ -34,6 +36,7 @@ const Chat = ({ user, messages, chatId }: ChatProps) => {
         .update(chatId, { messages: sendMessagesData });
 
       setSendMessageText('');
+      setLoading(false);
     }
   };
 
@@ -87,7 +90,7 @@ const Chat = ({ user, messages, chatId }: ChatProps) => {
             onChange={(e: any) => setSendMessageText(e.target.value)}
             value={sendMessageText}
           />
-          <Button onClick={handleSendMessage}>
+          <Button onClick={handleSendMessage} loading={loading}>
             <SendOutlined style={{ fontSize: '1.5rem' }} />
           </Button>
         </S.SendMessageContainer>
