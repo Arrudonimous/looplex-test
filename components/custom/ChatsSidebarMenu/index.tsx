@@ -24,10 +24,14 @@ const ChatSidebarMenu = ({
   const router = useRouter();
 
   const [selectedChat, setSelectedChat] = useState<Number>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogout = () => {
+    setLoading(true);
     pb.authStore.clear();
     localStorage.clear();
+    setLoading(false);
+
     router.push('/');
   };
 
@@ -41,23 +45,32 @@ const ChatSidebarMenu = ({
         <Typography style='text' fontSize='20px' color='white'>
           Usuários
         </Typography>
-        {users?.map((user, index) => (
-          <Contact
-            user={user}
-            key={index}
-            selected={selectedChat === index}
-            setSelectedChat={() => {
-              setSelectedContact(index);
-              setSelectedChat(index);
-            }}
-          />
-        ))}
+        <S.ContactsContainer>
+          {users?.map((user, index) => (
+            <Contact
+              user={user}
+              key={index}
+              selected={selectedChat === index}
+              setSelectedChat={() => {
+                setSelectedContact(index);
+                setSelectedChat(index);
+              }}
+            />
+          ))}
+        </S.ContactsContainer>
       </S.ChatsContainer>
 
-      <Button danger={true} onClick={handleLogout} block={true}>
-        <ExportOutlined />
-        <span>Sair</span>
-      </Button>
+      <S.ButtonContainer>
+        <Button
+          danger={true}
+          onClick={handleLogout}
+          block={true}
+          loading={loading}
+        >
+          <ExportOutlined />
+          <span>Sair</span>
+        </Button>
+      </S.ButtonContainer>
     </S.SidebarContainer>
   );
 };

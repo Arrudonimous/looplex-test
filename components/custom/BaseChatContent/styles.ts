@@ -12,4 +12,12 @@ export const Wrapper = styled.div`
   padding: 50px;
   font-size: 32px;
   text-align: center;
+
+  @media (max-width: 990px) {
+    .logoImage {
+      width: 10rem !important;
+      height: 3.5rem !important;
+    }
+    font-size: 24px !important;
+  }
 `;

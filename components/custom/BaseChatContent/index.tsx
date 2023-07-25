@@ -6,7 +6,13 @@ import Typography from '@/components/core/Typography';
 const BaseChatContent = () => {
   return (
     <S.Wrapper>
-      <Image src={LooplexLogo} width={368} height={128} alt='Looplex Logo' />
+      <Image
+        src={LooplexLogo}
+        width={368}
+        height={128}
+        alt='Looplex Logo'
+        className='logoImage'
+      />
       Projeto de chat desenvolvido com: NextJs, Pocketbase e Ant Design
     </S.Wrapper>
   );

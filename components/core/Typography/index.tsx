@@ -8,6 +8,7 @@ interface TypographyProps {
   color?: string;
   fontSize?: string;
   fontWeight?: string;
+  props?: any;
 }
 
 const { Title, Paragraph, Text } = TypographyCore;
@@ -19,6 +20,7 @@ const Typography = ({
   color,
   fontSize,
   fontWeight,
+  props,
 }: TypographyProps) => {
   if (style === 'title') {
     return (

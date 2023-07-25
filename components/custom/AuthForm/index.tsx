@@ -8,12 +8,14 @@ import Form, { ItemProps } from '@/components/core/Form';
 import Link from 'next/link';
 import pb from '@/lib/pocketbase';
 import Typography from '@/components/core/Typography';
+import { useState } from 'react';
 
 interface AuthFormProps {
   title: string;
   subtitle: string;
   redirectUrl?: string;
   items: ItemProps[];
+  buttonTitle: string;
 }
 
 const errors = [
@@ -39,11 +41,19 @@ const errors = [
   },
 ];
 
-const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
+const AuthForm = ({
+  title,
+  redirectUrl,
+  subtitle,
+  items,
+  buttonTitle,
+}: AuthFormProps) => {
   const router = useRouter();
+  const [loading, setIsLoading] = useState(false);
 
   const onFinish = async (values: any) => {
     if (values.NomeCompleto) {
+      setIsLoading(true);
       try {
         const createdUserData = await pb.collection('users').create({
           email: values.Email,
@@ -66,7 +76,6 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
         });
 
         toast('Usuário cadastrado com sucesso!', {
-          hideProgressBar: true,
           autoClose: 2000,
           type: 'success',
         });
@@ -76,14 +85,13 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
 
         setTimeout(() => {
           router.push('/home');
-        }, 2100);
+        }, 1000);
       } catch (error: any) {
         if (error.data.data.email) {
           const errorMessage = errors.find(
             (customError) => customError.code === error.data.data.email.code
           )?.message;
           toast(errorMessage, {
-            hideProgressBar: true,
             autoClose: 2000,
             type: 'error',
           });
@@ -92,7 +100,6 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
             (customError) => customError.code === error.data.data.password.code
           )?.message;
           toast(errorMessage, {
-            hideProgressBar: true,
             autoClose: 2000,
             type: 'error',
           });
@@ -102,44 +109,46 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
               customError.code === error.data.data.passwordConfirm.code
           )?.message;
           toast(errorMessage, {
-            hideProgressBar: true,
             autoClose: 2000,
             type: 'error',
           });
         }
+      } finally {
+        setIsLoading(false);
       }
     } else {
+      setIsLoading(true);
+
       try {
         await pb
           .collection('users')
           .authWithPassword(values.Email, values.Senha);
         toast('Logado com sucesso!', {
-          hideProgressBar: true,
           autoClose: 2000,
           type: 'success',
         });
 
         setTimeout(() => {
           router.push('/home');
-        }, 2100);
+        }, 1000);
       } catch (error: any) {
         if (error.data.code) {
           const errorMessage = errors.find(
             (customError) => customError.code === error.data.message
           )?.message;
           toast(errorMessage, {
-            hideProgressBar: true,
             autoClose: 2000,
             type: 'error',
           });
         }
+      } finally {
+        setIsLoading(false);
       }
     }
   };
 
   const onFinishFailed = (values: any) => {
     toast('Preencha os campos e tente novamente', {
-      hideProgressBar: true,
       autoClose: 2000,
       type: 'error',
     });
@@ -150,7 +159,13 @@ const AuthForm = ({ title, redirectUrl, subtitle, items }: AuthFormProps) => {
       <Typography style='title' color='white' fontSize='32px'>
         {title}
       </Typography>
-      <Form items={items} onFinish={onFinish} onFinishFailed={onFinishFailed} />
+      <Form
+        items={items}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        buttonTitle={buttonTitle}
+        loading={loading}
+      />
       <S.AuthFormFooterContainer>
         <Typography style='text' color='white' fontSize='18px'>
           Ou

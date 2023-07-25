@@ -15,4 +15,9 @@ export const ChatContainer = styled.div`
   max-width: 70rem;
   height: 49rem;
   display: flex;
+
+  @media (max-width: 990px) {
+    height: 100vh;
+    flex-direction: column;
+  }
 `;

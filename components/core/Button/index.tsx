@@ -8,7 +8,8 @@ interface ButtonProps {
   danger?: boolean;
   onClick?: MouseEventHandler<HTMLAnchorElement> &
     MouseEventHandler<HTMLButtonElement>;
-  block?: boolean ;
+  block?: boolean;
+  loading: boolean;
 }
 
 const Button = ({
@@ -17,6 +18,7 @@ const Button = ({
   danger,
   onClick,
   block,
+  loading,
 }: ButtonProps) => {
   return (
     <ButtonCore
@@ -36,6 +38,7 @@ const Button = ({
       htmlType={htmlType}
       danger={danger}
       onClick={onClick}
+      loading={loading}
     >
       {children}
     </ButtonCore>

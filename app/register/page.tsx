@@ -1,11 +1,12 @@
 'use client';
 
+import 'react-toastify/dist/ReactToastify.css';
 import { ItemProps } from '@/components/core/Form';
+import { ToastContainer } from 'react-toastify';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import * as S from './styles';
 import AuthContainer from '@/components/custom/AuthContainer';
-
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
 
 const items: ItemProps[] = [
   {
@@ -29,9 +30,22 @@ const items: ItemProps[] = [
 ];
 
 const RegisterPage = () => {
+  const router = useRouter();
+  useEffect(() => {
+    const loggedUserData = localStorage.getItem('pocketbase_auth');
+
+    if (loggedUserData) {
+      router.push('/home');
+    }
+  }, []);
   return (
     <S.Wrapper>
-      <AuthContainer title='Cadastre-se' subtitle='Conecte-se' items={items} />
+      <AuthContainer
+        title='Cadastre-se'
+        subtitle='Conecte-se'
+        items={items}
+        buttonTitle='CADASTRAR'
+      />
       <ToastContainer autoClose={2000} />
     </S.Wrapper>
   );

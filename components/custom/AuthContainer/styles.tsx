@@ -16,6 +16,10 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (max-width: 990px) {
+    display: none;
+  }
 `;
 
 export const DescriptionParagraph = styled(Typography.Paragraph)`

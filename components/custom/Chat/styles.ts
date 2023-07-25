@@ -18,6 +18,16 @@ export const ChatHeader = styled.header`
   align-items: center;
   padding: 1rem;
   border-top-right-radius: 10px;
+
+  @media (max-width: 990px) {
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 0;
+    height: auto;
+    border: 0;
+    border-top: 1px solid white;
+  }
 `;
 
 export const NameContainer = styled.div`
@@ -25,12 +35,22 @@ export const NameContainer = styled.div`
   gap: 1rem;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 990px) {
+    font-size: 12px !important;
+  }
 `;
 export const EmailContainer = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 990px) {
+    .mailIcon {
+      font-size: 20px !important;
+    }
+  }
 `;
 
 export const ChatContent = styled.div`
@@ -44,6 +64,12 @@ export const ChatContent = styled.div`
   padding: 1rem;
   border: 1px solid white;
   border-bottom-right-radius: 10px;
+
+  @media (max-width: 990px) {
+    border-radius: 0;
+    padding: 0;
+    padding-top: 10px;
+  }
 `;
 
 export const SendMessageContainer = styled.div`
@@ -58,21 +84,23 @@ export const MessagesContainer = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   height: 37rem;
+  width: 100%;
+
+  @media (max-width: 990px) {
+    height: 35rem;
+  }
 
   scrollbar-width: thin;
   scrollbar-color: #555555 #f1f1f1;
 
-  /* Estilo da barra de rolagem */
   &::-webkit-scrollbar {
-    width: 5px; /* Largura da barra de rolagem */
+    width: 5px;
   }
 
-  /* Cor da alça (polegar) da barra de rolagem */
   &::-webkit-scrollbar-thumb {
     background-color: #555555;
   }
 
-  /* Estilo da pista (trilha) da barra de rolagem */
   &::-webkit-scrollbar-track {
     background-color: #f1f1f1;
   }
@@ -85,9 +113,14 @@ interface MessageProps {
 export const Message = styled.div<MessageProps>`
   display: flex;
   width: 22.5rem;
-  background-color: blue;
   align-self: ${({ isMine }) => (isMine ? 'end' : 'start')};
   background-color: ${({ isMine }) => (isMine ? '#1D2632' : '#D9D9D9')};
   padding: 0.5rem;
   border-radius: 0.5rem;
+
+  @media (max-width: 990px) {
+    width: 15rem;
+    margin-right: ${({ isMine }) => (isMine ? '10px' : '0')};
+    margin-left: ${({ isMine }) => (isMine ? '0' : '10px')};
+  }
 `;

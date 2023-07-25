@@ -10,6 +10,7 @@ interface AuthContainerProps {
   subtitle: string;
   redirectUrl?: string;
   items: ItemProps[];
+  buttonTitle: string;
 }
 
 const AuthContainer = ({
@@ -17,11 +18,12 @@ const AuthContainer = ({
   redirectUrl,
   subtitle,
   items,
+  buttonTitle,
 }: AuthContainerProps) => {
   return (
     <S.AuthContainerWrapper>
       <S.InfoContainer>
-        <Image src={LooplexLogo} width={368} height={128} alt='Looplex Logo' />
+        <Image src={LooplexLogo} width={368} height={128} alt='Looplex Logo' className='logoImage'/>
         <S.DescriptionParagraph>
           Projeto de chat desenvolvido com: NextJs, Pocketbase e Ant Design
         </S.DescriptionParagraph>
@@ -31,6 +33,7 @@ const AuthContainer = ({
         redirectUrl={redirectUrl}
         subtitle={subtitle}
         items={items}
+        buttonTitle={buttonTitle}
       />
     </S.AuthContainerWrapper>
   );

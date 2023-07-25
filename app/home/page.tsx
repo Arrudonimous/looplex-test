@@ -1,11 +1,11 @@
 'use client';
-import ChatSidebarMenu from '@/components/custom/ChatsSidebarMenu';
-import * as S from './styles';
-
 import { useEffect, useState } from 'react';
+import * as S from './styles';
 import BaseChatContent from '@/components/custom/BaseChatContent';
 import Chat from '@/components/custom/Chat';
+import ChatSidebarMenu from '@/components/custom/ChatsSidebarMenu';
 import pb from '@/lib/pocketbase';
+import { useRouter } from 'next/navigation';
 
 export interface UsersProps {
   id: number;
@@ -19,6 +19,7 @@ const Home = () => {
   const [loggedUser, setLoggedUser] = useState<any>();
   const [selectedContact, setSelectedContact] = useState<number | null>(null);
   const [users, setUsers] = useState<any>();
+  const router = useRouter();
 
   const getCurrentChatMessages = (index: number) => {
     setSelectedContact(index);
@@ -47,7 +48,6 @@ const Home = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && typeof EventSource !== 'undefined') {
-      // Your code that uses EventSource here
       const eventSource = new EventSource('https://pocketbase-looplex.fly.dev');
 
       const fetchUsers = async () => {
@@ -64,6 +64,8 @@ const Home = () => {
           );
 
           setUsers(usersList);
+        } else {
+          router.push('/');
         }
       };
 
