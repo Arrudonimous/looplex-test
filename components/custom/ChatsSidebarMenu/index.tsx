@@ -24,10 +24,14 @@ const ChatSidebarMenu = ({
   const router = useRouter();
 
   const [selectedChat, setSelectedChat] = useState<Number>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogout = () => {
+    setLoading(true);
     pb.authStore.clear();
     localStorage.clear();
+    setLoading(false);
+
     router.push('/');
   };
 
@@ -54,7 +58,12 @@ const ChatSidebarMenu = ({
         ))}
       </S.ChatsContainer>
 
-      <Button danger={true} onClick={handleLogout} block={true}>
+      <Button
+        danger={true}
+        onClick={handleLogout}
+        block={true}
+        loading={loading}
+      >
         <ExportOutlined />
         <span>Sair</span>
       </Button>
