@@ -8,7 +8,7 @@ export const ContactContainer = styled.div<ContactContainerProps>`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  width: 100%;
+  width: 90%;
   padding: 0.5rem;
   border-radius: 10px;
   align-items: center;

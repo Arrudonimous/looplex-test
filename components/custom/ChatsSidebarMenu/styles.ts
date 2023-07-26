@@ -4,7 +4,7 @@ export const SidebarContainer = styled.div`
   width: 12rem;
   background-color: #212529;
   height: auto;
-  padding: 16px 16px 30px 16px;
+  padding: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;

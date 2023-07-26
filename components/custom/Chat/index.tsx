@@ -6,9 +6,10 @@ import * as S from './styles';
 import Avatar from '../Avatar';
 import Typography from '@/components/core/Typography';
 import { MailOutlined, SendOutlined } from '@ant-design/icons';
-import Input from '@/components/core/Input';
-import Button from '@/components/core/Button';
+// import Input from '@/components/core/Input';
+// import Button from '@/components/core/Button';
 import pb from '@/lib/pocketbase';
+import { Form, Input, Button } from 'antd';
 
 interface ChatProps {
   user: UsersProps;
@@ -21,6 +22,7 @@ const Chat = ({ user, messages, chatId }: ChatProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [sendMessageText, setSendMessageText] = useState('');
   const sendMessagesData = messages;
+  const [form] = Form.useForm();
 
   const scrollIntoLastMessage = () => {
     const lastMessage = document.getElementById(`${messages?.length - 1}`);
@@ -28,12 +30,12 @@ const Chat = ({ user, messages, chatId }: ChatProps) => {
     lastMessage?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (values: any) => {
+
     setLoading(true);
-    if (sendMessageText.trim()) {
       const incomingMessage = {
         senderId: loggedUserData.model.id,
-        content: sendMessageText,
+        content: values.message,
       };
       sendMessagesData.push(incomingMessage);
 
@@ -42,12 +44,12 @@ const Chat = ({ user, messages, chatId }: ChatProps) => {
           .collection('chats')
           .update(chatId, { messages: sendMessagesData });
 
-        setSendMessageText('');
         setLoading(false);
       }
-    }
+    form.resetFields();
     setLoading(false);
   };
+
 
   useEffect(() => {
     const loggedUserData = localStorage.getItem('pocketbase_auth');
@@ -108,14 +110,34 @@ const Chat = ({ user, messages, chatId }: ChatProps) => {
         </S.MessagesContainer>
 
         <S.SendMessageContainer>
-          <Input
-            placeholder='Digite sua mensagem'
-            onChange={(e: any) => setSendMessageText(e.target.value)}
-            value={sendMessageText}
-          />
-          <Button onClick={handleSendMessage} loading={loading}>
-            <SendOutlined style={{ fontSize: '1.5rem' }} />
-          </Button>
+          <Form form={form} layout="inline" onFinish={handleSendMessage} style={{ width: '100%'}} >
+            <Form.Item name="message" style={{ width: '88%'}}>
+              <Input
+                type="text"
+                placeholder="Digite sua mensagem"
+                  size='large'
+
+              />                
+            </Form.Item>
+            <Form.Item shouldUpdate>
+              {() => (
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  disabled={
+                    !form.isFieldsTouched(true) ||
+                    !!form.getFieldsError().filter(({ errors }) => errors.length).length
+                  }
+                  loading={loading}
+                  size='large'
+                >
+                  <SendOutlined style={{ fontSize: '1.5rem' }} />
+                </Button>
+              )}
+            </Form.Item>
+          </Form>
+
+          
         </S.SendMessageContainer>
       </S.ChatContent>
     </S.ChatWrapper>
