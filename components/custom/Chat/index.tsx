@@ -47,6 +47,7 @@ const Chat = ({ user, messages, chatId }: ChatProps) => {
         setLoading(false);
       }
     form.resetFields();
+    scrollIntoLastMessage()
     setLoading(false);
   };
 
@@ -111,7 +112,7 @@ const Chat = ({ user, messages, chatId }: ChatProps) => {
 
         <S.SendMessageContainer>
           <Form form={form} layout="inline" onFinish={handleSendMessage} style={{ width: '100%'}} >
-            <Form.Item name="message" style={{ width: '88%'}}>
+            <Form.Item name="message" style={{ width: screen.width <= 990 ? '77%' : '90%'}}>
               <Input
                 type="text"
                 placeholder="Digite sua mensagem"
@@ -128,7 +129,6 @@ const Chat = ({ user, messages, chatId }: ChatProps) => {
                     !form.isFieldsTouched(true) ||
                     !!form.getFieldsError().filter(({ errors }) => errors.length).length
                   }
-                  loading={loading}
                   size='large'
                 >
                   <SendOutlined style={{ fontSize: '1.5rem' }} />
